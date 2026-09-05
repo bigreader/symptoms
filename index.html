@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>Symptom Tracker</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="app-header">
+  <h1>Symptom Tracker</h1>
+  <p class="subtitle">Private, local log for tracking a bout of illness</p>
+</header>
+
+<main>
+  <section class="card" aria-labelledby="log-heading">
+    <h2 id="log-heading">Log entry</h2>
+    <form id="entryForm">
+      <div class="field">
+        <label for="timestamp">Date &amp; time</label>
+        <input type="datetime-local" id="timestamp" name="timestamp" required>
+      </div>
+
+      <div id="symptomRows" class="symptom-rows"></div>
+
+      <div class="field">
+        <label for="temperature">Temperature (&deg;F, optional)</label>
+        <input type="number" id="temperature" name="temperature" step="0.1" min="90" max="110" inputmode="decimal" placeholder="e.g. 99.8">
+      </div>
+
+      <div class="field">
+        <label for="notes">Notes (optional)</label>
+        <textarea id="notes" name="notes" rows="2" placeholder="e.g. took Tylenol"></textarea>
+      </div>
+
+      <button type="submit" class="btn primary">Save entry</button>
+    </form>
+  </section>
+
+  <section class="card" aria-labelledby="trend-heading">
+    <h2 id="trend-heading">Trend</h2>
+    <p class="hint">Overall severity (sum of all symptoms) over time</p>
+    <div class="chart-wrap">
+      <canvas id="chart" height="160"></canvas>
+    </div>
+    <p id="chartEmpty" class="hint" hidden>No entries yet — log one above to start tracking.</p>
+  </section>
+
+  <section class="card" aria-labelledby="entries-heading">
+    <div class="entries-header">
+      <h2 id="entries-heading">Entries</h2>
+      <div class="data-actions">
+        <button type="button" id="exportBtn" class="btn small">Export</button>
+        <button type="button" id="importBtn" class="btn small">Import</button>
+        <input type="file" id="importFile" accept="application/json" hidden>
+        <button type="button" id="clearAllBtn" class="btn small danger">Clear all</button>
+      </div>
+    </div>
+    <div id="entryList" class="entry-list"></div>
+    <p id="entryListEmpty" class="hint" hidden>No entries yet.</p>
+  </section>
+</main>
+
+<script src="app.js"></script>
+</body>
+</html>
