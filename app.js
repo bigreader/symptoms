@@ -5,6 +5,7 @@
     { key: 'fever', label: 'Fever' },
     { key: 'cough', label: 'Cough' },
     { key: 'soreThroat', label: 'Sore throat' },
+    { key: 'throatWeirdness', label: 'Throat weirdness' },
     { key: 'fatigue', label: 'Fatigue' },
     { key: 'headache', label: 'Headache' },
     { key: 'congestion', label: 'Congestion' },
@@ -163,10 +164,12 @@
     ctx.lineTo(padding.left + w, padding.top + h);
     ctx.stroke();
 
-    const n = values.length;
-    const xStep = n > 1 ? w / (n - 1) : 0;
+    const times = sorted.map((e) => new Date(e.timestamp).getTime());
+    const minT = times[0];
+    const maxT = times[times.length - 1];
+    const timeRange = maxT - minT;
     const points = values.map((v, i) => {
-      const x = padding.left + (n > 1 ? i * xStep : w / 2);
+      const x = padding.left + (timeRange > 0 ? ((times[i] - minT) / timeRange) * w : w / 2);
       const y = padding.top + h - (v / maxVal) * h;
       return [x, y];
     });
