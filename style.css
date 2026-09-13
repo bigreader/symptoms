@@ -92,6 +92,7 @@ main {
 
 input[type="datetime-local"],
 input[type="number"],
+input[type="text"],
 textarea {
   font: inherit;
   padding: 0.55rem 0.6rem;
@@ -246,6 +247,16 @@ textarea {
 .entry-severity {
   font-size: 0.78rem;
   color: var(--muted);
+}
+
+.entry-relative {
+  font-weight: 400;
+  color: var(--muted);
+}
+
+.entry-exposure {
+  font-size: 0.85rem;
+  margin-bottom: 0.4rem;
 }
 
 .entry-symptoms {
