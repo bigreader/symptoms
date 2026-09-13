@@ -85,6 +85,11 @@ main {
   gap: 0.3rem;
 }
 
+.field:has(#timestamp) {
+  max-width: 100%;
+  overflow-x: auto;
+}
+
 .field label {
   font-size: 0.85rem;
   font-weight: 600;
@@ -92,6 +97,7 @@ main {
 
 input[type="datetime-local"],
 input[type="number"],
+input[type="text"],
 textarea {
   font: inherit;
   padding: 0.55rem 0.6rem;
@@ -100,6 +106,8 @@ textarea {
   background: var(--bg);
   color: var(--text);
   width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 textarea {
@@ -246,6 +254,16 @@ textarea {
 .entry-severity {
   font-size: 0.78rem;
   color: var(--muted);
+}
+
+.entry-relative {
+  font-weight: 400;
+  color: var(--muted);
+}
+
+.entry-exposure {
+  font-size: 0.85rem;
+  margin-bottom: 0.4rem;
 }
 
 .entry-symptoms {

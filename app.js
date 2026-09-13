@@ -20,6 +20,7 @@
   const timestampInput = document.getElementById('timestamp');
   const symptomRows = document.getElementById('symptomRows');
   const temperatureInput = document.getElementById('temperature');
+  const exposureInput = document.getElementById('exposure');
   const notesInput = document.getElementById('notes');
   const entryList = document.getElementById('entryList');
   const entryListEmpty = document.getElementById('entryListEmpty');
@@ -88,6 +89,13 @@
     });
   }
 
+  function formatRelativeHours(isoString) {
+    const hours = (Date.now() - new Date(isoString).getTime()) / 3600000;
+    const sign = hours < 0 ? 'in ' : '';
+    const suffix = hours < 0 ? '' : ' ago';
+    return `${sign}${Math.abs(hours).toFixed(1)}h${suffix}`;
+  }
+
   function renderList(entries) {
     const sorted = [...entries].sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
 
@@ -104,17 +112,19 @@
         metaParts.push(`${entry.temperature}°F`);
       }
       const meta = metaParts.length ? `<div class="entry-meta">${metaParts.join(' • ')}</div>` : '';
+      const exposure = entry.exposure ? `<div class="entry-exposure">Exposure: ${escapeHtml(entry.exposure)}</div>` : '';
       const notes = entry.notes ? `<div class="entry-notes">${escapeHtml(entry.notes)}</div>` : '';
       const symptomsHtml = pills ? `<div class="entry-symptoms">${pills}</div>` : `<div class="entry-symptoms hint">No symptoms logged</div>`;
 
       return `
         <div class="entry-card" data-id="${entry.id}">
           <div class="entry-card-top">
-            <span class="entry-date">${formatDate(entry.timestamp)}</span>
+            <span class="entry-date">${formatDate(entry.timestamp)} <span class="entry-relative">(${formatRelativeHours(entry.timestamp)})</span></span>
             <span class="entry-severity">Total severity: ${severitySum(entry)}</span>
           </div>
           ${symptomsHtml}
           ${meta}
+          ${exposure}
           ${notes}
           <button type="button" class="btn small danger entry-delete" data-id="${entry.id}">Delete</button>
         </div>
@@ -217,6 +227,7 @@
       timestamp: new Date(timestampInput.value).toISOString(),
       symptoms,
       temperature: tempRaw === '' ? null : parseFloat(tempRaw),
+      exposure: exposureInput.value.trim(),
       notes: notesInput.value.trim(),
     };
 
