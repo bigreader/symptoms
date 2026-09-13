@@ -85,6 +85,11 @@ main {
   gap: 0.3rem;
 }
 
+.field:has(#timestamp) {
+  max-width: 100%;
+  overflow-x: auto;
+}
+
 .field label {
   font-size: 0.85rem;
   font-weight: 600;
@@ -101,6 +106,8 @@ textarea {
   background: var(--bg);
   color: var(--text);
   width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 textarea {
